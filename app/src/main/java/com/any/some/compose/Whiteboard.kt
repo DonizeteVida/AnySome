@@ -40,7 +40,7 @@ interface WhiteboardItem {
 fun Whiteboard(
     modifier: Modifier = Modifier,
     items: List<WhiteboardItem>,
-    onMove: (Offset) -> Unit
+    onDragGesture: (IntOffset) -> Unit
 ) {
     var nextZIndex by remember { mutableFloatStateOf(0F) }
     var offset by remember { mutableStateOf(Offset.Zero) }
@@ -49,7 +49,7 @@ fun Whiteboard(
         modifier.pointerInput(Unit) {
             detectDragGestures { _, dragAmount ->
                 offset += dragAmount
-                onMove(offset)
+                onDragGesture(offset.round())
             }
         }
     ) {
@@ -82,15 +82,14 @@ fun Whiteboard(
 }
 
 class SimpleWhiteboardItem(
-    x: Int = 0,
-    y: Int = 0,
+    offset: IntOffset,
     private val size: Int = 0
 ) : WhiteboardItem {
-    override var x by mutableIntStateOf(x)
-    override var y by mutableIntStateOf(y)
+    override var x by mutableIntStateOf(offset.x)
+    override var y by mutableIntStateOf(offset.y)
     override var zIndex by mutableFloatStateOf(0F)
 
-    private val color = Color((0xFF shl 24) or (Random(size).nextInt() and 0xFFFFFF))
+    private val color = Color((0xFF shl 24) or (Random(offset.hashCode()).nextInt() and 0xFFFFFF))
 
     @Composable
     override fun Compose() {
@@ -108,7 +107,7 @@ class SimpleWhiteboardItem(
 private fun PrevWhiteboard() {
     AnySomeTheme {
         Whiteboard(Modifier.fillMaxSize(), List(10) {
-            SimpleWhiteboardItem(it, it, (it + 1) * 10)
+            SimpleWhiteboardItem(IntOffset(it, it), (it + 1) * 10)
         }) {
 
         }
