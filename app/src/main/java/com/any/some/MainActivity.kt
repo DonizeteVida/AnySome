@@ -24,6 +24,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.round
@@ -81,18 +83,24 @@ private fun MainPrev() {
 fun DraggableFloatActionButton(
     onDragDropped: (IntOffset) -> Unit
 ) {
-    var dragPosition by remember { mutableStateOf(Offset.Zero) }
+    var position = remember { Offset.Zero }
+    var offset by remember { mutableStateOf(Offset.Zero) }
 
     FloatingActionButton(
         modifier = Modifier
-            .offset { dragPosition.round() }
+            .offset { offset.round() }
             .draggable2D(
-                rememberDraggable2DState { dragPosition += it },
+                rememberDraggable2DState { offset += it },
                 onDragStopped = {
-                    onDragDropped(dragPosition.round())
-                    dragPosition = Offset.Zero
+                    onDragDropped(position.round() + offset.round())
+                    offset = Offset.Zero
                 }
-            ),
+            )
+            .onGloballyPositioned { coordinates ->
+                if (position == Offset.Zero) {
+                    position = coordinates.positionInWindow()
+                }
+            },
         onClick = {
 
         }
