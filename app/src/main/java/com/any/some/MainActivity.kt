@@ -47,12 +47,13 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Main(modifier: Modifier = Modifier) {
-    val data = remember {
-        mutableStateListOf<SimpleWhiteboardItem>()
-    }
+    var whiteboardOffset = remember { Offset.Zero }
+    val data = remember { mutableStateListOf<SimpleWhiteboardItem>() }
+
     Scaffold(
         floatingActionButton = {
             DraggableFloatActionButton { offset ->
+                val offset = offset - whiteboardOffset.round()
                 data += SimpleWhiteboardItem(
                     offset.x,
                     offset.y,
@@ -65,7 +66,10 @@ fun Main(modifier: Modifier = Modifier) {
             Modifier
                 .fillMaxSize()
                 .padding(padding),
-            data
+            data,
+            onMove = { offset ->
+                whiteboardOffset = offset
+            }
         )
     }
 }

@@ -39,7 +39,8 @@ interface WhiteboardItem {
 @Composable
 fun Whiteboard(
     modifier: Modifier = Modifier,
-    items: List<WhiteboardItem>
+    items: List<WhiteboardItem>,
+    onMove: (Offset) -> Unit
 ) {
     var nextZIndex by remember { mutableFloatStateOf(0F) }
     var offset by remember { mutableStateOf(Offset.Zero) }
@@ -48,6 +49,7 @@ fun Whiteboard(
         modifier.pointerInput(Unit) {
             detectDragGestures { _, dragAmount ->
                 offset += dragAmount
+                onMove(offset)
             }
         }
     ) {
@@ -107,6 +109,8 @@ private fun PrevWhiteboard() {
     AnySomeTheme {
         Whiteboard(Modifier.fillMaxSize(), List(10) {
             SimpleWhiteboardItem(it, it, (it + 1) * 10)
-        })
+        }) {
+
+        }
     }
 }
