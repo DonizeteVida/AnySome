@@ -2,14 +2,15 @@ package com.any.some.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -19,12 +20,14 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.any.some.ui.theme.AnySomeTheme
 import kotlin.random.Random
 
 interface WhiteboardItem {
     var x: Int
     var y: Int
+    var zIndex: Float
 
     @Composable
     fun Compose()
@@ -35,26 +38,38 @@ fun Whiteboard(
     modifier: Modifier = Modifier,
     items: List<WhiteboardItem>
 ) {
+    var nextZIndex by remember { mutableFloatStateOf(0F) }
     var x by remember { mutableIntStateOf(0) }
     var y by remember { mutableIntStateOf(0) }
 
     Box(
-        modifier.pointerInput(Unit) {
-            detectDragGestures { _, dragAmount ->
-                x += dragAmount.x.toInt()
-                y += dragAmount.y.toInt()
+        modifier
+            .offset { IntOffset(x, y) }
+            .pointerInput(Unit) {
+                detectDragGestures { _, dragAmount ->
+                    x += dragAmount.x.toInt()
+                    y += dragAmount.y.toInt()
+                }
             }
-        }
     ) {
         for (item in items) {
             Box(
                 Modifier
-                    .offset { IntOffset(item.x + x, item.y + y) }
+                    .offset { IntOffset(item.x, item.y) }
+                    .zIndex(item.zIndex)
                     .pointerInput(Unit) {
                         detectDragGestures { _, dragAmount ->
                             item.x += dragAmount.x.toInt()
                             item.y += dragAmount.y.toInt()
+                            item.zIndex = ++nextZIndex
                         }
+                    }
+                    .pointerInput(Unit) {
+                        detectTapGestures(
+                            onDoubleTap = {
+                                item.zIndex = 0F
+                            }
+                        )
                     }
             ) {
                 item.Compose()
@@ -68,8 +83,9 @@ private class SimpleWhiteboardItem(
     y: Int = 0,
     private val size: Int = 0
 ) : WhiteboardItem {
-    override var x: Int by mutableIntStateOf(x)
-    override var y: Int by mutableIntStateOf(y)
+    override var x by mutableIntStateOf(x)
+    override var y by mutableIntStateOf(y)
+    override var zIndex by mutableFloatStateOf(0F)
 
     private val color = Color((0xFF shl 24) or (Random(size).nextInt() and 0xFFFFFF))
 
