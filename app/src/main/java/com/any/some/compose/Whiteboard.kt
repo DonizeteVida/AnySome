@@ -12,14 +12,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.round
 import androidx.compose.ui.zIndex
 import com.any.some.ui.theme.AnySomeTheme
 import kotlin.random.Random
@@ -39,46 +42,44 @@ fun Whiteboard(
     items: List<WhiteboardItem>
 ) {
     var nextZIndex by remember { mutableFloatStateOf(0F) }
-    var x by remember { mutableIntStateOf(0) }
-    var y by remember { mutableIntStateOf(0) }
+    var offset by remember { mutableStateOf(Offset.Zero) }
 
     Box(
-        modifier
-            .offset { IntOffset(x, y) }
-            .pointerInput(Unit) {
-                detectDragGestures { _, dragAmount ->
-                    x += dragAmount.x.toInt()
-                    y += dragAmount.y.toInt()
-                }
+        modifier.pointerInput(Unit) {
+            detectDragGestures { _, dragAmount ->
+                offset += dragAmount
             }
+        }
     ) {
-        for (item in items) {
-            Box(
-                Modifier
-                    .offset { IntOffset(item.x, item.y) }
-                    .zIndex(item.zIndex)
-                    .pointerInput(Unit) {
-                        detectDragGestures { _, dragAmount ->
-                            item.x += dragAmount.x.toInt()
-                            item.y += dragAmount.y.toInt()
-                            item.zIndex = ++nextZIndex
-                        }
-                    }
-                    .pointerInput(Unit) {
-                        detectTapGestures(
-                            onDoubleTap = {
-                                item.zIndex = 0F
+        Box(Modifier.offset { offset.round() }) {
+            for (item in items) {
+                Box(
+                    Modifier
+                        .offset { IntOffset(item.x, item.y) }
+                        .zIndex(item.zIndex)
+                        .pointerInput(Unit) {
+                            detectDragGestures { _, dragAmount ->
+                                item.x += dragAmount.x.toInt()
+                                item.y += dragAmount.y.toInt()
+                                item.zIndex = ++nextZIndex
                             }
-                        )
-                    }
-            ) {
-                item.Compose()
+                        }
+                        .pointerInput(Unit) {
+                            detectTapGestures(
+                                onDoubleTap = {
+                                    item.zIndex = 0F
+                                }
+                            )
+                        }
+                ) {
+                    item.Compose()
+                }
             }
         }
     }
 }
 
-private class SimpleWhiteboardItem(
+class SimpleWhiteboardItem(
     x: Int = 0,
     y: Int = 0,
     private val size: Int = 0
