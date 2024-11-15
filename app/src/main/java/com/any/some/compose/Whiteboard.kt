@@ -16,7 +16,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
@@ -43,17 +42,17 @@ fun Whiteboard(
     onDragGesture: (IntOffset) -> Unit
 ) {
     var nextZIndex by remember { mutableFloatStateOf(0F) }
-    var offset by remember { mutableStateOf(Offset.Zero) }
+    var offset by remember { mutableStateOf(IntOffset.Zero) }
 
     Box(
         modifier.pointerInput(Unit) {
             detectDragGestures { _, dragAmount ->
-                offset += dragAmount
-                onDragGesture(offset.round())
+                offset += dragAmount.round()
+                onDragGesture(offset)
             }
         }
     ) {
-        Box(Modifier.offset { offset.round() }) {
+        Box(Modifier.offset { offset }) {
             for (item in items) {
                 Box(
                     Modifier
