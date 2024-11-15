@@ -8,19 +8,19 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.IntOffset
+import com.any.some.feature.text.WhiteboardTextItem
 
 @Composable
 fun WhiteboardManager() {
     var offset = remember { IntOffset.Zero }
-    val data = remember { mutableStateListOf<SimpleWhiteboardItem>() }
+    val data = remember { mutableStateListOf<WhiteboardItem>() }
 
     Scaffold(
         floatingActionButton = {
             DraggableFloatActionButton {
-                data += SimpleWhiteboardItem(
-                    it - offset,
-                    75
-                )
+                data += WhiteboardTextItem(
+                    "Hello World"
+                ).setOffset(it - offset)
             }
         }
     ) { padding ->
