@@ -1,6 +1,5 @@
 package com.any.some.feature.text
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.OutlinedTextField
@@ -19,9 +18,7 @@ fun WhiteboardText(
     data: String
 ) {
     val (text, setText) = remember { mutableStateOf(data) }
-    Column(modifier) {
-        OutlinedTextField(text, setText)
-    }
+    OutlinedTextField(text, setText, modifier)
 }
 
 class WhiteboardTextItem(
@@ -40,7 +37,7 @@ private fun PrevWhiteboardText() {
         WhiteboardText(
             Modifier
                 .width(100.dp)
-                .height(50.dp),
+                .height(300.dp),
             "Hello World"
         )
     }
