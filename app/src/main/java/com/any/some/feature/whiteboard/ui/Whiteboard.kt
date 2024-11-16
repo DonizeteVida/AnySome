@@ -1,4 +1,4 @@
-package com.any.some.compose
+package com.any.some.feature.whiteboard.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -26,13 +26,14 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.round
-import com.any.some.feature.text.WhiteboardTextItem
+import com.any.some.feature.text.TextWhiteboardItem
+import com.any.some.presentation.WhiteboardItem
 import com.any.some.ui.theme.AnySomeTheme
 
 @Composable
 fun Whiteboard(
     modifier: Modifier = Modifier,
-    items: List<WhiteboardItem>,
+    items: List<WhiteboardItem<*>>,
     onDragGesture: (IntOffset) -> Unit
 ) {
     var offset by remember { mutableStateOf(IntOffset.Zero) }
@@ -59,7 +60,7 @@ fun Whiteboard(
 }
 
 @Composable
-fun WhiteboardItemWrapper(item: WhiteboardItem) {
+fun WhiteboardItemWrapper(item: WhiteboardItem<*>) {
     var size by remember { mutableStateOf(DpSize(150.dp, 100.dp)) }
 
     Column(
@@ -87,17 +88,6 @@ fun WhiteboardItemWrapper(item: WhiteboardItem) {
     }
 }
 
-abstract class WhiteboardItem {
-    var offset by mutableStateOf(IntOffset.Zero)
-
-    @Composable
-    abstract fun Content(modifier: Modifier)
-}
-
-fun WhiteboardItem.setOffset(offset: IntOffset) = apply {
-    this.offset = offset
-}
-
 @Preview(showBackground = true)
 @Composable
 private fun PrevWhiteboard() {
@@ -105,8 +95,8 @@ private fun PrevWhiteboard() {
         Whiteboard(
             Modifier.fillMaxSize(),
             listOf(
-                WhiteboardTextItem("Hello World 1"),
-                WhiteboardTextItem("Hello World 2")
+                TextWhiteboardItem(1, "Hello World 1"),
+                TextWhiteboardItem(1, "Hello World 2")
             )
         ) { }
     }

@@ -25,5 +25,5 @@ object RoomModule {
     @Provides
     fun providesWhiteboardItemDao(
         anySomeDatabase: AnySomeDatabase
-    ) = anySomeDatabase.whiteboardItemDao
+    ) = anySomeDatabase.whiteboardItemDataDao
 }

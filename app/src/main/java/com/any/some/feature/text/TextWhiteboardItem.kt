@@ -4,41 +4,42 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import com.any.some.compose.WhiteboardItem
+import com.any.some.presentation.WhiteboardItem
 import com.any.some.ui.theme.AnySomeTheme
 
-@Composable
-fun WhiteboardText(
-    modifier: Modifier,
-    data: String
-) {
-    val (text, setText) = remember { mutableStateOf(data) }
-    OutlinedTextField(text, setText, modifier)
-}
-
-class WhiteboardTextItem(
-    private val data: String
-) : WhiteboardItem() {
+class TextWhiteboardItem(
+    id: Long,
+    data: String,
+    offset: IntOffset = IntOffset.Zero,
+    size: IntSize = IntSize.Zero
+) : WhiteboardItem<String>(id, data, offset, size) {
     @Composable
     override fun Content(modifier: Modifier) {
-        WhiteboardText(modifier, data)
+        TextWhiteboardItem(modifier)
     }
+}
+
+@Composable
+fun WhiteboardItem<String>.TextWhiteboardItem(
+    modifier: Modifier
+) {
+    OutlinedTextField(data, ::setData, modifier)
 }
 
 @Preview
 @Composable
 private fun PrevWhiteboardText() {
     AnySomeTheme {
-        WhiteboardText(
+        val item = TextWhiteboardItem(0, "Hello World")
+        item.Content(
             Modifier
                 .width(100.dp)
-                .height(300.dp),
-            "Hello World"
+                .height(300.dp)
         )
     }
 }
