@@ -13,7 +13,9 @@ import com.any.some.feature.text.TextWhiteboardItem
 import com.any.some.presentation.WhiteboardItem
 
 @Composable
-fun WhiteboardManager() {
+fun WhiteboardManager(
+    onInsert: (WhiteboardItem<*>) -> Unit
+) {
     val scope = rememberCoroutineScope()
 
     var offset = remember { IntOffset.Zero }

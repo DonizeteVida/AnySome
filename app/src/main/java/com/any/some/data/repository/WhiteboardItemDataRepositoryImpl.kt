@@ -3,6 +3,7 @@ package com.any.some.data.repository
 import com.any.some.data.room.dao.WhiteboardItemDataDao
 import com.any.some.data.room.entity.WhiteboardItemDataEntity
 import com.any.some.domain.model.WhiteboardItemData
+import com.any.some.domain.model.WhiteboardItemType
 import com.any.some.domain.repository.WhiteboardItemDataRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -25,9 +26,9 @@ class WhiteboardItemDataRepositoryImpl @Inject constructor(
 }
 
 private fun WhiteboardItemData.toEntity() = WhiteboardItemDataEntity(
-    id, type, body, x, y, width, height
+    id, type.ordinal, body, x, y, width, height
 )
 
 private fun WhiteboardItemDataEntity.toDomain() = WhiteboardItemData(
-    id, type, body, x, y, width, height
+    id, WhiteboardItemType.entries[type], body, x, y, width, height
 )

@@ -9,15 +9,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import com.any.some.domain.model.WhiteboardItemType
 import com.any.some.presentation.WhiteboardItem
 import com.any.some.ui.theme.AnySomeTheme
 
 class TextWhiteboardItem(
     id: Long,
     data: String,
+    type: WhiteboardItemType = WhiteboardItemType.TEXT,
     offset: IntOffset = IntOffset.Zero,
     size: IntSize = IntSize.Zero
-) : WhiteboardItem<String>(id, data, offset, size) {
+) : WhiteboardItem<String>(id, type, data, offset, size) {
     @Composable
     override fun Content(modifier: Modifier) {
         TextWhiteboardItem(modifier)
