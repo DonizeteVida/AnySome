@@ -18,7 +18,6 @@ fun WhiteboardManager(
     onInsert: (WhiteboardItem<*>) -> Unit
 ) {
     var offset = remember { IntOffset.Zero }
-    val items by state
 
     Scaffold(
         floatingActionButton = {
@@ -29,6 +28,7 @@ fun WhiteboardManager(
             }
         }
     ) { padding ->
+        val items by state
         Whiteboard(
             Modifier
                 .fillMaxSize()

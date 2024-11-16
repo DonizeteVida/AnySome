@@ -1,7 +1,6 @@
 package com.any.some.feature.text
 
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,16 +20,14 @@ class TextWhiteboardItem(
     size: DpSize = DpSize(150.dp, 100.dp)
 ) : WhiteboardItem<String>(id, type, data, offset, size) {
     @Composable
-    override fun Content(modifier: Modifier) {
-        TextWhiteboardItem(modifier)
+    override fun Content() {
+        TextWhiteboardItem()
     }
 }
 
 @Composable
-fun WhiteboardItem<String>.TextWhiteboardItem(
-    modifier: Modifier
-) {
-    OutlinedTextField(data, ::setData, modifier)
+fun WhiteboardItem<String>.TextWhiteboardItem() {
+    OutlinedTextField(data, ::setData, Modifier.size(size))
 }
 
 @Preview
@@ -38,10 +35,6 @@ fun WhiteboardItem<String>.TextWhiteboardItem(
 private fun PrevWhiteboardText() {
     AnySomeTheme {
         val item = TextWhiteboardItem(0, "Hello World")
-        item.Content(
-            Modifier
-                .width(100.dp)
-                .height(300.dp)
-        )
+        item.Content()
     }
 }
