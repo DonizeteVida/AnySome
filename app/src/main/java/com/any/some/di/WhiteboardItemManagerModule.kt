@@ -4,21 +4,23 @@ import com.any.some.domain.model.WhiteboardItemType
 import com.any.some.feature.text.TextWhiteboardItemManager
 import com.any.some.presentation.WhiteboardItemManager
 import dagger.Binds
+import dagger.MapKey
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Qualifier
+import dagger.multibindings.IntoMap
 
-@Qualifier
-annotation class WhiteboardItemManagerQualifier(
-    val type: WhiteboardItemType
+@MapKey
+annotation class WhiteboardItemManagerKey(
+    val value: WhiteboardItemType
 )
 
 @Module
 @InstallIn(SingletonComponent::class)
 interface WhiteboardItemManagerModule {
     @Binds
-    @WhiteboardItemManagerQualifier(WhiteboardItemType.TEXT)
+    @IntoMap
+    @WhiteboardItemManagerKey(WhiteboardItemType.TEXT)
     fun bindsTextWhiteboardItemManager(
         impl: TextWhiteboardItemManager
     ): WhiteboardItemManager<*>
