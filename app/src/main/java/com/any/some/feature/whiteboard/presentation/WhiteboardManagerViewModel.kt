@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.any.some.domain.repository.WhiteboardItemDataRepository
 import com.any.some.domain.usecase.InsertWhiteboardItemUseCase
 import com.any.some.domain.usecase.TransformWhiteboardItemDataUseCase
-import com.any.some.presentation.WhiteboardItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -28,5 +27,9 @@ class WhiteboardManagerViewModel @Inject constructor(
         viewModelScope.launch {
             insertWhiteboardItemUseCase(item)
         }
+    }
+
+    suspend fun updateWhiteboardItem(item: WhiteboardItem<*>) {
+        insertWhiteboardItemUseCase(item)
     }
 }

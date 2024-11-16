@@ -1,6 +1,7 @@
-package com.any.some.presentation
+package com.any.some.feature.whiteboard.presentation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -20,7 +21,15 @@ abstract class WhiteboardItem<T : Any>(
     var size by mutableStateOf(size)
 
     @Composable
-    abstract fun Content()
+    fun Content() {
+        LaunchedEffect(data, offset, size) {
+            println("Something changed")
+        }
+        WhiteboardItemContent()
+    }
+
+    @Composable
+    abstract fun WhiteboardItemContent()
 
     fun setData(data: T) = apply { this.data = data }
     fun setOffset(offset: IntOffset) = apply { this.offset = offset }

@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.any.some.domain.model.WhiteboardItemType
-import com.any.some.presentation.WhiteboardItem
+import com.any.some.feature.whiteboard.presentation.WhiteboardItem
 import com.any.some.ui.theme.AnySomeTheme
 
 class TextWhiteboardItem(
@@ -20,7 +20,7 @@ class TextWhiteboardItem(
     size: DpSize = DpSize(150.dp, 100.dp)
 ) : WhiteboardItem<String>(id, type, data, offset, size) {
     @Composable
-    override fun Content() {
+    override fun WhiteboardItemContent() {
         TextWhiteboardItem()
     }
 }

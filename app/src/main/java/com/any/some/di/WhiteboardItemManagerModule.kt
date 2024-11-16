@@ -1,8 +1,8 @@
 package com.any.some.di
 
 import com.any.some.domain.model.WhiteboardItemType
-import com.any.some.feature.text.TextWhiteboardItemManager
-import com.any.some.presentation.WhiteboardItemManager
+import com.any.some.feature.text.TextWhiteboardItemTransformer
+import com.any.some.feature.whiteboard.presentation.WhiteboardItemTransformer
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -21,7 +21,7 @@ interface WhiteboardItemManagerModule {
     @Binds
     @IntoMap
     @WhiteboardItemManagerKey(WhiteboardItemType.TEXT)
-    fun bindsTextWhiteboardItemManager(
-        impl: TextWhiteboardItemManager
-    ): WhiteboardItemManager<*>
+    fun bindsTextWhiteboardItemTransformer(
+        impl: TextWhiteboardItemTransformer
+    ): WhiteboardItemTransformer<*>
 }

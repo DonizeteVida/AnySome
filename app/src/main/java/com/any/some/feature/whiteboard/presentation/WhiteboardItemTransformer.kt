@@ -1,8 +1,8 @@
-package com.any.some.presentation
+package com.any.some.feature.whiteboard.presentation
 
 import com.any.some.domain.model.WhiteboardItemData
 
-interface WhiteboardItemManager<T : Any> {
+interface WhiteboardItemTransformer<T : Any> {
     suspend operator fun invoke(
         item: WhiteboardItemData
     ): WhiteboardItem<T>

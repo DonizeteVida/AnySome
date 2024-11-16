@@ -4,11 +4,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntOffset
 import com.any.some.domain.model.WhiteboardItemData
-import com.any.some.presentation.WhiteboardItem
-import com.any.some.presentation.WhiteboardItemManager
+import com.any.some.feature.whiteboard.presentation.WhiteboardItem
+import com.any.some.feature.whiteboard.presentation.WhiteboardItemTransformer
 import javax.inject.Inject
 
-class TextWhiteboardItemManager @Inject constructor() : WhiteboardItemManager<String> {
+class TextWhiteboardItemTransformer @Inject constructor() : WhiteboardItemTransformer<String> {
     override suspend fun invoke(
         item: WhiteboardItemData
     ) = TextWhiteboardItem(

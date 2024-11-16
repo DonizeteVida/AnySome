@@ -10,7 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.IntOffset
 import com.any.some.feature.text.TextWhiteboardItem
-import com.any.some.presentation.WhiteboardItem
+import com.any.some.feature.whiteboard.presentation.WhiteboardItem
 
 @Composable
 fun WhiteboardManager(
