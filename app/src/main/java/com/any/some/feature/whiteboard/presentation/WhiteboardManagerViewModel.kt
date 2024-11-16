@@ -2,34 +2,22 @@ package com.any.some.feature.whiteboard.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.any.some.domain.repository.WhiteboardItemDataRepository
-import com.any.some.domain.usecase.InsertWhiteboardItemUseCase
-import com.any.some.domain.usecase.TransformWhiteboardItemDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class WhiteboardManagerViewModel @Inject constructor(
-    private val whiteboardItemDataRepository: WhiteboardItemDataRepository,
-    private val insertWhiteboardItemUseCase: InsertWhiteboardItemUseCase,
-    private val transformWhiteboardItemDataUseCase: TransformWhiteboardItemDataUseCase
+    private val whiteboardItemManager: WhiteboardItemManager
 ) : ViewModel() {
 
-    val items = whiteboardItemDataRepository.get().map { items ->
-        items.map { transformWhiteboardItemDataUseCase(it) }
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    val items = whiteboardItemManager
+        .items
+        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     fun insertWhiteboardItem(item: WhiteboardItem<*>) {
-        viewModelScope.launch {
-            insertWhiteboardItemUseCase(item)
-        }
-    }
-
-    suspend fun updateWhiteboardItem(item: WhiteboardItem<*>) {
-        insertWhiteboardItemUseCase(item)
+        viewModelScope.launch { whiteboardItemManager.insert(item) }
     }
 }

@@ -16,5 +16,6 @@ class InsertWhiteboardItemUseCase @Inject constructor(
             ?: throw IllegalStateException("Manager not found for type ${item.type}")
         val whiteboardItemData = manager(item)
         whiteboardItemDataRepository.insert(whiteboardItemData)
+        println("INSERTING: " + item)
     }
 }

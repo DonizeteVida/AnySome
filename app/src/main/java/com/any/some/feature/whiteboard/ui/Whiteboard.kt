@@ -62,7 +62,7 @@ private fun WhiteboardItem(item: WhiteboardItem<*>) {
     Column(
         Modifier
             .offset { item.offset }
-            .pointerInput(Unit) {
+            .pointerInput(item) {
                 detectDragGestures { _, dragAmount ->
                     item.offset += dragAmount.round()
                 }
@@ -74,7 +74,7 @@ private fun WhiteboardItem(item: WhiteboardItem<*>) {
             contentDescription = null,
             modifier = Modifier
                 .align(Alignment.End)
-                .pointerInput(Unit) {
+                .pointerInput(item) {
                     detectDragGestures { _, dragAmount ->
                         val (x, y) = dragAmount
                         item.size += DpSize(x.toDp(), y.toDp())

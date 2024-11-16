@@ -7,7 +7,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntOffset
+import com.any.some.LocalWhiteboardItemManager
 import com.any.some.domain.model.WhiteboardItemType
+import kotlinx.coroutines.delay
 
 abstract class WhiteboardItem<T : Any>(
     val id: Long,
@@ -22,8 +24,12 @@ abstract class WhiteboardItem<T : Any>(
 
     @Composable
     fun Content() {
+        val whiteboardItemManager = LocalWhiteboardItemManager.current
         LaunchedEffect(data, offset, size) {
-            println("Something changed")
+            if (id > 0) {
+                delay(1000)
+                whiteboardItemManager.update(this@WhiteboardItem)
+            }
         }
         WhiteboardItemContent()
     }
@@ -34,4 +40,8 @@ abstract class WhiteboardItem<T : Any>(
     fun setData(data: T) = apply { this.data = data }
     fun setOffset(offset: IntOffset) = apply { this.offset = offset }
     fun setSize(size: DpSize) = apply { this.size = size }
+
+    override fun toString(): String {
+        return "WhiteboardItem(id=$id, type=$type, data=$data, offset=$offset, size=$size)"
+    }
 }
