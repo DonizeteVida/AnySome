@@ -6,6 +6,6 @@ data class WhiteboardItemData(
     val body: String,
     val x: Int,
     val y: Int,
-    val width: Int,
-    val height: Int
+    val width: Float,
+    val height: Float
 )

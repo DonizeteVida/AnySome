@@ -6,8 +6,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.any.some.domain.model.WhiteboardItemType
 import com.any.some.presentation.WhiteboardItem
@@ -18,7 +18,7 @@ class TextWhiteboardItem(
     data: String,
     type: WhiteboardItemType = WhiteboardItemType.TEXT,
     offset: IntOffset = IntOffset.Zero,
-    size: IntSize = IntSize.Zero
+    size: DpSize = DpSize(150.dp, 100.dp)
 ) : WhiteboardItem<String>(id, type, data, offset, size) {
     @Composable
     override fun Content(modifier: Modifier) {

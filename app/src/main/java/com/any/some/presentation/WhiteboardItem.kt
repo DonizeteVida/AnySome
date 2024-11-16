@@ -5,8 +5,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.IntSize
 import com.any.some.domain.model.WhiteboardItemType
 
 abstract class WhiteboardItem<T : Any>(
@@ -14,7 +14,7 @@ abstract class WhiteboardItem<T : Any>(
     val type: WhiteboardItemType,
     data: T,
     offset: IntOffset = IntOffset.Zero,
-    size: IntSize = IntSize.Zero
+    size: DpSize = DpSize.Zero
 ) {
     var data: T by mutableStateOf(data)
     var offset by mutableStateOf(offset)
@@ -25,5 +25,5 @@ abstract class WhiteboardItem<T : Any>(
 
     fun setData(data: T) = apply { this.data = data }
     fun setOffset(offset: IntOffset) = apply { this.offset = offset }
-    fun setSize(size: IntSize) = apply { this.size = size }
+    fun setSize(size: DpSize) = apply { this.size = size }
 }

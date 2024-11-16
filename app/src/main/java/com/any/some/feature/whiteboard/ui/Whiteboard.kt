@@ -24,7 +24,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.round
 import com.any.some.feature.text.TextWhiteboardItem
 import com.any.some.presentation.WhiteboardItem
@@ -61,8 +60,6 @@ fun Whiteboard(
 
 @Composable
 fun WhiteboardItemWrapper(item: WhiteboardItem<*>) {
-    var size by remember { mutableStateOf(DpSize(150.dp, 100.dp)) }
-
     Column(
         Modifier
             .offset { item.offset }
@@ -72,7 +69,7 @@ fun WhiteboardItemWrapper(item: WhiteboardItem<*>) {
                 }
             }
     ) {
-        item.Content(Modifier.size(size))
+        item.Content(Modifier.size(item.size))
         Image(
             painter = rememberVectorPainter(Icons.Default.Menu),
             contentDescription = null,
@@ -81,7 +78,7 @@ fun WhiteboardItemWrapper(item: WhiteboardItem<*>) {
                 .pointerInput(Unit) {
                     detectDragGestures { _, dragAmount ->
                         val (x, y) = dragAmount
-                        size += DpSize(x.toDp(), y.toDp())
+                        item.size += DpSize(x.toDp(), y.toDp())
                     }
                 }
         )
