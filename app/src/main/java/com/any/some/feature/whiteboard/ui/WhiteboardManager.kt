@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.IntOffset
@@ -12,10 +14,11 @@ import com.any.some.presentation.WhiteboardItem
 
 @Composable
 fun WhiteboardManager(
-    items: List<WhiteboardItem<*>>,
+    state: State<List<WhiteboardItem<*>>>,
     onInsert: (WhiteboardItem<*>) -> Unit
 ) {
-    var offset = remember(Unit) { IntOffset.Zero }
+    var offset = remember { IntOffset.Zero }
+    val items by state
 
     Scaffold(
         floatingActionButton = {

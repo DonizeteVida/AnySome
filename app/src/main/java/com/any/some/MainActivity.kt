@@ -7,7 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import com.any.some.feature.whiteboard.presentation.WhiteboardManagerViewModel
 import com.any.some.feature.whiteboard.ui.WhiteboardManager
@@ -22,9 +23,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             AnySomeTheme {
                 val viewModel by viewModels<WhiteboardManagerViewModel>()
-                val items by viewModel.items.collectAsState()
                 WhiteboardManager(
-                    items = items,
+                    state = viewModel.items.collectAsState(),
                     onInsert = viewModel::insertWhiteboardItem
                 )
             }
@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
 private fun MainPrev() {
     AnySomeTheme {
         WhiteboardManager(
-            items = emptyList(),
+            state = remember { derivedStateOf { emptyList() } },
             onInsert = {
 
             }
