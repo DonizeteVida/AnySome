@@ -23,7 +23,7 @@ abstract class UIWhiteboardItem<T>(
     width: Float,
     height: Float
 ) {
-    var body: T by mutableStateOf(body)
+    var body by mutableStateOf(body)
     var offset by mutableStateOf(IntOffset(x, y))
     var size by mutableStateOf(DpSize(Dp(width), Dp(height)))
 

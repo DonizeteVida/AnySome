@@ -1,7 +1,9 @@
 package com.any.some.presentation.compose.permission
 
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AdminPanelSettings
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -15,8 +17,10 @@ fun PermissionRequester(
 ) {
     val state = rememberPermissionState(permission)
     if (state.status.isGranted.not()) {
-        Button(onClick = { state.launchPermissionRequest() }) {
-            Text("Please, grant camera permission")
+        IconButton(onClick = {
+            state.launchPermissionRequest()
+        }) {
+            Icon(Icons.Default.AdminPanelSettings, contentDescription = "")
         }
         return
     }

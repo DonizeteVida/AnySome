@@ -15,7 +15,7 @@ class PictureUIWhiteboardItemMapper @Inject constructor() : UIWhiteboardItemMapp
 
     override suspend fun invoke(
         item: WhiteboardItem<String>
-    ): UIWhiteboardItem<String> = PictureUIWhiteboardItem(
+    ) = PictureUIWhiteboardItem(
         item.id,
         item.type,
         item.body,
