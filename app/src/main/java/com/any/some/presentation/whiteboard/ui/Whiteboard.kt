@@ -1,4 +1,4 @@
-package com.any.some.feature.whiteboard.ui
+package com.any.some.presentation.whiteboard.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -24,14 +24,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.round
-import com.any.some.feature.text.TextWhiteboardItem
-import com.any.some.feature.whiteboard.presentation.WhiteboardItem
+import com.any.some.presentation.model.UIWhiteboardItem
+import com.any.some.presentation.text.TextUIWhiteboardItem
 import com.any.some.ui.theme.AnySomeTheme
 
 @Composable
 fun Whiteboard(
     modifier: Modifier = Modifier,
-    items: List<WhiteboardItem<*>>,
+    items: List<UIWhiteboardItem<*>>,
     onDragGesture: (IntOffset) -> Unit
 ) {
     var offset by remember { mutableStateOf(IntOffset.Zero) }
@@ -58,7 +58,7 @@ fun Whiteboard(
 }
 
 @Composable
-private fun WhiteboardItem(item: WhiteboardItem<*>) {
+private fun WhiteboardItem(item: UIWhiteboardItem<*>) {
     Column(
         Modifier
             .offset { item.offset }
@@ -91,8 +91,8 @@ private fun PrevWhiteboard() {
         Whiteboard(
             Modifier.fillMaxSize(),
             listOf(
-                TextWhiteboardItem(1, "Hello World 1"),
-                TextWhiteboardItem(1, "Hello World 2")
+                TextUIWhiteboardItem(1, body = "Hello World 1"),
+                TextUIWhiteboardItem(1, body = "Hello World 2")
             )
         ) { }
     }

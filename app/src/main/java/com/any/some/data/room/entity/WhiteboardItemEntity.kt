@@ -3,8 +3,8 @@ package com.any.some.data.room.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "whiteboard_item_data")
-class WhiteboardItemDataEntity(
+@Entity(tableName = "whiteboard_item")
+class WhiteboardItemEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val type: Int,

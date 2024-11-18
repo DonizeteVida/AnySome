@@ -1,7 +1,7 @@
 package com.any.some.di
 
-import com.any.some.data.repository.WhiteboardItemDataRepositoryImpl
-import com.any.some.domain.repository.WhiteboardItemDataRepository
+import com.any.some.data.repository.WhiteboardItemRepositoryImpl
+import com.any.some.domain.repository.WhiteboardItemRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,6 +12,6 @@ import dagger.hilt.components.SingletonComponent
 interface RepositoryModule {
     @Binds
     fun bindsWhiteboardItemDataRepositoryImpl(
-        impl: WhiteboardItemDataRepositoryImpl
-    ): WhiteboardItemDataRepository
+        impl: WhiteboardItemRepositoryImpl
+    ): WhiteboardItemRepository
 }
