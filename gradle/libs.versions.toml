@@ -10,9 +10,11 @@ lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.9.3"
 composeBom = "2024.11.00"
 androidxMaterialIconsExtended = "1.7.5"
+accompanist = "0.36.0"
 hilt = "2.51.1"
 room = "2.6.1"
-accompanist = "0.36.0"
+coil3 = "3.0.3"
+cameraX = "1.5.0-alpha03"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,6 +42,23 @@ hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.r
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+
+coil3 = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil3" }
+
+camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "cameraX" }
+camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "cameraX" }
+camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraX" }
+camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraX" }
+camera-extensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "cameraX" }
+
+[bundles]
+camerax = [
+    "camera-core",
+    "camera-camera2",
+    "camera-lifecycle",
+    "camera-view",
+    "camera-extensions"
+]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
