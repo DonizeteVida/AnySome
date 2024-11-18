@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -18,17 +19,23 @@ fun TakePicture(
     content: @Composable (takePicture: () -> Unit) -> Unit
 ) {
     val context = LocalContext.current
-    var uri by remember { mutableStateOf(MainFileProvider.generateTempFileUri(context)) }
+    var currentUri by remember { mutableStateOf(MainFileProvider.generateTempFileUri(context)) }
+    var nextUri by remember { mutableStateOf(Uri.EMPTY) }
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicture()
     ) { taken ->
         if (!taken) return@rememberLauncherForActivityResult
-        onPicture(uri)
-        uri = MainFileProvider.generateTempFileUri(context)
+        nextUri = currentUri
+        currentUri = MainFileProvider.generateTempFileUri(context)
+    }
+
+    LaunchedEffect(nextUri, onPicture) {
+        if (nextUri == Uri.EMPTY) return@LaunchedEffect
+        onPicture(nextUri)
     }
 
     PermissionRequester(android.Manifest.permission.CAMERA) {
-        content { launcher.launch(uri) }
+        content { launcher.launch(currentUri) }
     }
 }

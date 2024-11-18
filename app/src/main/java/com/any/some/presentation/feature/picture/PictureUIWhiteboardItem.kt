@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.ImageSearch
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,6 +50,8 @@ class PictureUIWhiteboardItem(
 
 @Composable
 private fun PictureWhiteboardItem(state: PictureUIWhiteboardItem) {
+    val onPicture = remember(state) { { uri: Uri -> state.body = "$uri" } }
+
     Column(
         Modifier.size(state.size),
         verticalArrangement = Arrangement.Center,
@@ -65,7 +68,7 @@ private fun PictureWhiteboardItem(state: PictureUIWhiteboardItem) {
         }
         Row {
             PickVisualMedia(
-                onPicture = { uri -> state.body = "$uri" }
+                onPicture = onPicture
             ) { takePicture ->
                 IconButton(onClick = takePicture) {
                     Icon(
@@ -76,7 +79,7 @@ private fun PictureWhiteboardItem(state: PictureUIWhiteboardItem) {
             }
 
             TakePicture(
-                onPicture = { uri -> state.body = "$uri" }
+                onPicture = onPicture
             ) { takePicture ->
                 IconButton(onClick = takePicture) {
                     Icon(
