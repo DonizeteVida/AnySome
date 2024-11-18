@@ -2,5 +2,9 @@
 <paths>
     <cache-path
         name="temporary_files"
-        path="temp/" />
+        path="temporary/" />
+
+    <external-files-path
+        name="permanent_files"
+        path="permanent/" />
 </paths>

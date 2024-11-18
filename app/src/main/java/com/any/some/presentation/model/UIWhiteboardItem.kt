@@ -1,6 +1,5 @@
 package com.any.some.presentation.model
 
-
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
