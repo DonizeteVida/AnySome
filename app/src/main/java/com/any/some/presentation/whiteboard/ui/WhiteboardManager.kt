@@ -9,8 +9,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.IntOffset
+import com.any.some.presentation.feature.picture.PictureUIWhiteboardItem
 import com.any.some.presentation.model.UIWhiteboardItem
-import com.any.some.presentation.text.TextUIWhiteboardItem
 
 @Composable
 fun WhiteboardManager(
@@ -22,7 +22,7 @@ fun WhiteboardManager(
     Scaffold(
         floatingActionButton = {
             DraggableFloatActionButton {
-                TextUIWhiteboardItem(0, body = "Hello World")
+                PictureUIWhiteboardItem(0)
                     .apply {
                         this.offset = it - offset
                         onInsert(this)

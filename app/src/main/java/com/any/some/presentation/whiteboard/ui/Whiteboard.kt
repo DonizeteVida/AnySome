@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.round
 import com.any.some.presentation.model.UIWhiteboardItem
-import com.any.some.presentation.text.TextUIWhiteboardItem
+import com.any.some.presentation.feature.text.TextUIWhiteboardItem
 import com.any.some.ui.theme.AnySomeTheme
 
 @Composable

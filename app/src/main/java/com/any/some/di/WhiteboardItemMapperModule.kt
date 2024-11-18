@@ -1,5 +1,6 @@
 package com.any.some.di
 
+import com.any.some.data.mapper.PictureWhiteboardItemMapper
 import com.any.some.data.mapper.TextWhiteboardItemMapper
 import com.any.some.data.mapper.WhiteboardItemMapper
 import com.any.some.domain.model.WhiteboardItemType
@@ -16,4 +17,9 @@ interface WhiteboardItemMapperModule {
     @IntoMap
     @WhiteboardItemTypeKey(WhiteboardItemType.TEXT)
     fun bindsTextWhiteboardItemMapper(impl: TextWhiteboardItemMapper): WhiteboardItemMapper<*>
+
+    @Binds
+    @IntoMap
+    @WhiteboardItemTypeKey(WhiteboardItemType.PICTURE)
+    fun bindsPictureWhiteboardItemMapper(impl: PictureWhiteboardItemMapper): WhiteboardItemMapper<*>
 }

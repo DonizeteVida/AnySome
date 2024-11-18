@@ -1,4 +1,4 @@
-package com.any.some.presentation.text
+package com.any.some.presentation.feature.text
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.OutlinedTextField
