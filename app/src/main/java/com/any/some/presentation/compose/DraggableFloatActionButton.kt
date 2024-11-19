@@ -1,4 +1,4 @@
-package com.any.some.presentation.whiteboard.ui
+package com.any.some.presentation.compose
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.draggable2D

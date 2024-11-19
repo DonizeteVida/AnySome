@@ -1,7 +1,7 @@
 package com.any.some.domain.model
 
-data class WhiteboardItem<T>(
-    val id: Long,
+data class WhiteboardItemData<T>(
+    val id: Long = 0,
     val type: String,
     val body: T,
     val x: Int,

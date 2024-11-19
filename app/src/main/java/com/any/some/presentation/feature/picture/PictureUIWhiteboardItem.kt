@@ -8,32 +8,22 @@ import androidx.compose.material.icons.filled.ImageSearch
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.any.some.domain.model.WhiteboardItemData
 import com.any.some.presentation.compose.permission.PermissionRequester
 import com.any.some.presentation.compose.picture.PickVisualMedia
 import com.any.some.presentation.compose.picture.TakePicture
 import com.any.some.presentation.model.UIWhiteboardItem
 import com.any.some.ui.theme.AnySomeTheme
 
+@Stable
 class PictureUIWhiteboardItem(
-    id: Long = 0,
-    body: String = "",
-    offset: IntOffset = IntOffset.Zero,
-    size: DpSize = DpSize(150.dp, 150.dp)
-) : UIWhiteboardItem<String>(
-    id,
-    body,
-    offset.x,
-    offset.y,
-    size.width.value,
-    size.height.value
-) {
+    data: WhiteboardItemData<String>
+) : UIWhiteboardItem<String>(data) {
     @Composable
     override fun Content() {
         PictureWhiteboardItem(this)
@@ -92,7 +82,19 @@ fun PictureWhiteboardItemToolbar(
 private fun PrevPictureWhiteboardItem() {
     AnySomeTheme {
         PermissionRequester(android.Manifest.permission.CAMERA) {
-            PictureWhiteboardItem(PictureUIWhiteboardItem())
+            PictureWhiteboardItem(
+                PictureUIWhiteboardItem(
+                    WhiteboardItemData(
+                        0,
+                        "",
+                        "",
+                        0,
+                        0,
+                        0F,
+                        0F
+                    )
+                )
+            )
         }
     }
 }

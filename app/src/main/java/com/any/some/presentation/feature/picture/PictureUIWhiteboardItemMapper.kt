@@ -1,36 +1,36 @@
 package com.any.some.presentation.feature.picture
 
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntOffset
-import com.any.some.domain.model.WhiteboardItem
+import androidx.compose.ui.unit.dp
+import com.any.some.domain.model.WhiteboardItemData
 import com.any.some.presentation.mapper.UIWhiteboardItemMapper
-import com.any.some.presentation.model.UIWhiteboardItem
 import javax.inject.Inject
 
 class PictureUIWhiteboardItemMapper @Inject constructor() : UIWhiteboardItemMapper<String> {
-    override fun new(offset: IntOffset) = PictureUIWhiteboardItem(
-        offset = offset
+    override fun new(
+        offset: IntOffset
+    ) = WhiteboardItemData(
+        id = 0,
+        type = PictureUIWhiteboardItem::class.qualifiedName
+            ?: throw IllegalStateException("Class name not found"),
+        body = "",
+        x = offset.x,
+        y = offset.y,
+        width = 150.dp.value,
+        height = 150.dp.value
     )
 
     override suspend fun invoke(
-        item: WhiteboardItem<String>
+        item: WhiteboardItemData<String>
     ) = PictureUIWhiteboardItem(
-        item.id,
-        item.body,
-        IntOffset(item.x, item.y),
-        DpSize(Dp(item.width), Dp(item.height))
-    )
-
-    override suspend fun invoke(
-        item: UIWhiteboardItem<String>
-    ) = WhiteboardItem(
-        item.id,
-        item::class.qualifiedName ?: throw IllegalStateException("Class name not found"),
-        item.body,
-        item.offset.x,
-        item.offset.y,
-        item.size.width.value,
-        item.size.height.value
+        WhiteboardItemData(
+            id = item.id,
+            type = item.type,
+            body = item.body,
+            x = item.x,
+            y = item.y,
+            width = item.width,
+            height = item.height
+        )
     )
 }

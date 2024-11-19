@@ -6,15 +6,14 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.any.some.data.room.entity.WhiteboardItemEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WhiteboardItemDataDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(item: WhiteboardItemEntity)
+    suspend fun insert(item: WhiteboardItemEntity): Long
 
     @Query("SELECT * FROM whiteboard_item")
-    fun get(): Flow<List<WhiteboardItemEntity>>
+    suspend fun getAll(): List<WhiteboardItemEntity>
 
     @Delete
     suspend fun delete(item: WhiteboardItemEntity)

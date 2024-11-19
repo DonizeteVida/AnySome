@@ -1,4 +1,4 @@
-package com.any.some.presentation.whiteboard.ui
+package com.any.some.presentation.whiteboard
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -18,8 +18,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AspectRatio
-import androidx.compose.material.icons.filled.DeviceHub
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -37,6 +35,7 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.round
+import com.any.some.domain.model.WhiteboardItemData
 import com.any.some.presentation.feature.picture.PictureUIWhiteboardItem
 import com.any.some.presentation.feature.text.TextUIWhiteboardItem
 import com.any.some.presentation.model.UIWhiteboardItem
@@ -74,6 +73,8 @@ fun Whiteboard(
 @Composable
 private fun WhiteboardItem(item: UIWhiteboardItem<*>) {
     var toolbarVisible by remember { mutableStateOf(false) }
+
+    item.ObserveChanges()
 
     Box(
         Modifier
@@ -134,8 +135,28 @@ private fun PrevWhiteboard() {
         Whiteboard(
             Modifier.fillMaxSize(),
             listOf(
-                TextUIWhiteboardItem(1, body = "Hello World"),
-                PictureUIWhiteboardItem(1)
+                TextUIWhiteboardItem(
+                    WhiteboardItemData(
+                        0,
+                        "",
+                        "",
+                        0,
+                        0,
+                        0F,
+                        0F
+                    )
+                ),
+                PictureUIWhiteboardItem(
+                    WhiteboardItemData(
+                        0,
+                        "",
+                        "",
+                        0,
+                        0,
+                        0F,
+                        0F
+                    )
+                )
             )
         ) { }
     }
