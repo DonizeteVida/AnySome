@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
-import com.any.some.domain.model.WhiteboardItemType
 import com.any.some.presentation.compose.permission.PermissionRequester
 import com.any.some.presentation.compose.picture.PickVisualMedia
 import com.any.some.presentation.compose.picture.TakePicture
@@ -25,13 +24,11 @@ import com.any.some.ui.theme.AnySomeTheme
 
 class PictureUIWhiteboardItem(
     id: Long = 0,
-    type: WhiteboardItemType = WhiteboardItemType.PICTURE,
     body: String = "",
     offset: IntOffset = IntOffset.Zero,
     size: DpSize = DpSize(150.dp, 150.dp)
 ) : UIWhiteboardItem<String>(
     id,
-    type,
     body,
     offset.x,
     offset.y,

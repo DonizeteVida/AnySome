@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 class WhiteboardItemEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
-    val type: Int,
+    val type: String,
     val body: String,
     val x: Int,
     val y: Int,

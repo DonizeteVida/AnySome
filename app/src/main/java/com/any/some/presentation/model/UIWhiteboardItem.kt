@@ -7,11 +7,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntOffset
-import com.any.some.domain.model.WhiteboardItemType
 
 abstract class UIWhiteboardItem<T>(
     val id: Long,
-    val type: WhiteboardItemType,
     body: T,
     x: Int,
     y: Int,

@@ -17,7 +17,6 @@ class PictureUIWhiteboardItemMapper @Inject constructor() : UIWhiteboardItemMapp
         item: WhiteboardItem<String>
     ) = PictureUIWhiteboardItem(
         item.id,
-        item.type,
         item.body,
         IntOffset(item.x, item.y),
         DpSize(Dp(item.width), Dp(item.height))
@@ -25,9 +24,9 @@ class PictureUIWhiteboardItemMapper @Inject constructor() : UIWhiteboardItemMapp
 
     override suspend fun invoke(
         item: UIWhiteboardItem<String>
-    ) = WhiteboardItem<String>(
+    ) = WhiteboardItem(
         item.id,
-        item.type,
+        item::class.qualifiedName ?: throw IllegalStateException("Class name not found"),
         item.body,
         item.offset.x,
         item.offset.y,
