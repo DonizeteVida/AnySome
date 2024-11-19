@@ -15,7 +15,7 @@ class TextUIWhiteboardItem(
     id: Long = 0,
     body: String = "",
     offset: IntOffset = IntOffset.Zero,
-    size: DpSize = DpSize(150.dp, 100.dp)
+    size: DpSize = DpSize(250.dp, 200.dp)
 ) : UIWhiteboardItem<String>(
     id,
     body,

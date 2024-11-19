@@ -14,7 +14,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.any.some.presentation.compose.permission.PermissionRequester
 import com.any.some.presentation.compose.picture.PickVisualMedia
@@ -63,7 +62,6 @@ private fun PictureWhiteboardItem(
 fun PictureWhiteboardItemToolbar(
     state: PictureUIWhiteboardItem
 ) {
-    val viewModel = viewModel<PictureUIWhiteboardItemViewModel>()
     val onPicture = remember(state) { { uri: Uri -> state.body = "$uri" } }
 
     PickVisualMedia(

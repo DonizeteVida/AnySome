@@ -1,9 +1,11 @@
 package com.any.some.presentation.model
 
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntOffset
@@ -25,6 +27,6 @@ abstract class UIWhiteboardItem<T>(
 
     @Composable
     open fun Toolbar() {
-        // Implement your additional toolbar items
+        Spacer(Modifier)
     }
 }

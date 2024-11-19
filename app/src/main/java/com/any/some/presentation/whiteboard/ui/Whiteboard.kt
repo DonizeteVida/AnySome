@@ -1,8 +1,10 @@
 package com.any.some.presentation.whiteboard.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,7 +15,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AspectRatio
+import androidx.compose.material.icons.filled.DeviceHub
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -32,6 +37,7 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.round
+import com.any.some.presentation.feature.picture.PictureUIWhiteboardItem
 import com.any.some.presentation.feature.text.TextUIWhiteboardItem
 import com.any.some.presentation.model.UIWhiteboardItem
 import com.any.some.ui.theme.AnySomeTheme
@@ -69,44 +75,53 @@ fun Whiteboard(
 private fun WhiteboardItem(item: UIWhiteboardItem<*>) {
     var toolbarVisible by remember { mutableStateOf(false) }
 
-    Column(
+    Box(
         Modifier
-            .size(item.size)
             .offset { item.offset }
             .pointerInput(item) {
                 detectDragGestures { _, dragAmount ->
                     item.offset += dragAmount.round()
                 }
             }
+            .pointerInput(item) {
+                detectTapGestures(
+                    onDoubleTap = {
+                        toolbarVisible = !toolbarVisible
+                    }
+                )
+            }
             .shadow(4.dp)
             .background(Color(0xFFFED800))
-            .padding(16.dp),
-        verticalArrangement = Arrangement.SpaceBetween,
+            .padding(16.dp)
     ) {
-        Box(Modifier.weight(1F)) {
-            item.Content()
-        }
-        Row(
-            Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+        Column(
+            Modifier.width(item.size.width)
         ) {
-            item.Toolbar()
-
-            IconButton(
-                onClick = {},
-                modifier = Modifier
-                    .pointerInput(item) {
-                        detectDragGestures { _, dragAmount ->
-                            val (x, y) = dragAmount
-                            item.size += DpSize(x.toDp(), y.toDp())
-                        }
+            Box(Modifier.size(item.size)) {
+                item.Content()
+            }
+            AnimatedVisibility(visible = toolbarVisible) {
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    item.Toolbar()
+                    IconButton(
+                        onClick = {},
+                        modifier = Modifier
+                            .pointerInput(item) {
+                                detectDragGestures { _, dragAmount ->
+                                    val (x, y) = dragAmount
+                                    item.size += DpSize(x.toDp(), y.toDp())
+                                }
+                            }
+                    ) {
+                        Icon(
+                            Icons.Default.AspectRatio,
+                            contentDescription = "Expand your whiteboard item"
+                        )
                     }
-            ) {
-                Icon(
-                    Icons.Default.Menu,
-                    contentDescription = "Expand your whiteboard item"
-                )
+                }
             }
         }
     }
@@ -119,8 +134,8 @@ private fun PrevWhiteboard() {
         Whiteboard(
             Modifier.fillMaxSize(),
             listOf(
-                TextUIWhiteboardItem(1, body = "Hello World 1"),
-                TextUIWhiteboardItem(1, body = "Hello World 2")
+                TextUIWhiteboardItem(1, body = "Hello World"),
+                PictureUIWhiteboardItem(1)
             )
         ) { }
     }
