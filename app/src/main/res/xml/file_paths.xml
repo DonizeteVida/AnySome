@@ -4,7 +4,7 @@
         name="temporary_files"
         path="temporary/" />
 
-    <external-files-path
+    <files-path
         name="permanent_files"
         path="permanent/" />
 </paths>

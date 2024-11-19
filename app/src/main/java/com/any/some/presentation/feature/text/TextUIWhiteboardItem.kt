@@ -28,7 +28,7 @@ class TextUIWhiteboardItem(
     size.height.value
 ) {
     @Composable
-    override fun WhiteboardItemContent() {
+    override fun Content() {
         TextWhiteboardItem()
     }
 }

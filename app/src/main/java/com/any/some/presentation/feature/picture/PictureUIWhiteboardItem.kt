@@ -1,11 +1,7 @@
 package com.any.some.presentation.feature.picture
 
 import android.net.Uri
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Camera
 import androidx.compose.material.icons.filled.ImageSearch
@@ -13,12 +9,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.any.some.domain.model.WhiteboardItemType
 import com.any.some.presentation.compose.permission.PermissionRequester
@@ -43,51 +39,55 @@ class PictureUIWhiteboardItem(
     size.height.value
 ) {
     @Composable
-    override fun WhiteboardItemContent() {
+    override fun Content() {
         PictureWhiteboardItem(this)
+    }
+
+    @Composable
+    override fun Toolbar() {
+        PictureWhiteboardItemToolbar(this)
     }
 }
 
 @Composable
-private fun PictureWhiteboardItem(state: PictureUIWhiteboardItem) {
+private fun PictureWhiteboardItem(
+    state: PictureUIWhiteboardItem
+) {
+    if (state.body.isNotEmpty()) {
+        AsyncImage(
+            Uri.parse(state.body),
+            contentDescription = null,
+            Modifier.fillMaxWidth()
+        )
+    }
+}
+
+@Composable
+fun PictureWhiteboardItemToolbar(
+    state: PictureUIWhiteboardItem
+) {
+    val viewModel = viewModel<PictureUIWhiteboardItemViewModel>()
     val onPicture = remember(state) { { uri: Uri -> state.body = "$uri" } }
 
-    Column(
-        Modifier.size(state.size),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (state.body.isNotEmpty()) {
-            AsyncImage(
-                Uri.parse(state.body),
-                contentDescription = null,
-                Modifier
-                    .fillMaxWidth()
-                    .weight(1F)
+    PickVisualMedia(
+        onPicture = onPicture
+    ) { takePicture ->
+        IconButton(onClick = takePicture) {
+            Icon(
+                Icons.Default.ImageSearch,
+                contentDescription = "Take a picture using your gallery"
             )
         }
-        Row {
-            PickVisualMedia(
-                onPicture = onPicture
-            ) { takePicture ->
-                IconButton(onClick = takePicture) {
-                    Icon(
-                        Icons.Default.ImageSearch,
-                        contentDescription = "Take a picture using your gallery"
-                    )
-                }
-            }
+    }
 
-            TakePicture(
-                onPicture = onPicture
-            ) { takePicture ->
-                IconButton(onClick = takePicture) {
-                    Icon(
-                        Icons.Default.Camera,
-                        contentDescription = "Take a picture using your camera"
-                    )
-                }
-            }
+    TakePicture(
+        onPicture = onPicture
+    ) { takePicture ->
+        IconButton(onClick = takePicture) {
+            Icon(
+                Icons.Default.Camera,
+                contentDescription = "Take a picture using your camera"
+            )
         }
     }
 }
